@@ -72,6 +72,7 @@ RUN mkdir -p /usr/bin \
   && wget -q -O /usr/bin/phpbrew https://github.com/phpbrew/phpbrew/raw/master/phpbrew && chmod +x /usr/bin/phpbrew
 
 RUN mkdir /opt/local \
+  && phpbrew self-update \
   && phpbrew init \
   && echo 'source /root/.phpbrew/bashrc' >> /root/.bashrc \
   && source /root/.phpbrew/bashrc \
@@ -89,8 +90,6 @@ RUN  phpbrew ext install yaml -- --with-yaml=/usr/lib/x86_64-linux-gnu \
   && phpbrew ext install apcu latest
 
 COPY php.ini $PHPBREW_ROOT/php/php-$PHP_VERSION/etc/php.ini
-
-RUN phpbrew self-update
 
 # Add user cidroid for testing
 RUN adduser --disabled-password --gecos '' cidroid \
