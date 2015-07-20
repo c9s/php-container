@@ -62,7 +62,6 @@ RUN export DEBIAN_FRONTEND="noninteractive" \
 
 RUN mkdir /opt/local \
   && wget -q -O /usr/bin/phpbrew https://github.com/phpbrew/phpbrew/raw/master/phpbrew && chmod +x /usr/bin/phpbrew \
-  && phpbrew self-update \
   && phpbrew init \
   && echo 'source /root/.phpbrew/bashrc' >> /root/.bashrc \
   && source /root/.phpbrew/bashrc \
