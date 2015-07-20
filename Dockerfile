@@ -7,9 +7,7 @@ USER root
 
 ENV DEBIAN_FRONTEND noninteractive
 
-ENV PHP_VERSION 5.6
-
-ENV PHP_SUBVERSION $PHP_VERSION.10
+ENV PHP_VERSION 5.6.10
 
 ENV PHPBREW_ROOT /root/.phpbrew
 
@@ -79,7 +77,7 @@ RUN mkdir -p /usr/bin \
 RUN phpbrew init \
   && echo 'source $HOME/.phpbrew/bashrc' >> /root/.bashrc \
   && source ~/.phpbrew/bashrc \
-  && phpbrew install $PHP_SUBVERSION \
+  && phpbrew install $PHP_VERSION \
               +default +bcmath +bz2 +calendar +cli +ctype +dom +fileinfo +filter +json \
               +mbregex +mbstring +mhash +pcntl +pcre +pdo +phar +posix +readline +sockets \
               +tokenizer +xml +curl +zip +openssl=yes +icu +opcache +fpm +sqlite +mysql +icu +default +intl +gettext
@@ -94,7 +92,7 @@ RUN  phpbrew ext install yaml -- --with-yaml=/usr/lib/x86_64-linux-gnu \
 
 RUN echo "Asia/Taipei" > /etc/timezone && dpkg-reconfigure -f noninteractive tzdata
 
-COPY php.ini $PHPBREW_ROOT/php/php-$PHP_SUBVERSION/etc/php.ini
+COPY php.ini $PHPBREW_ROOT/php/php-$PHP_VERSION/etc/php.ini
 
 VOLUME /home/ubuntu
 WORKDIR /home/ubuntu
