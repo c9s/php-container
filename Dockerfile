@@ -60,8 +60,7 @@ RUN export DEBIAN_FRONTEND="noninteractive" \
   && rm -rf /var/lib/apt/lists/*
 
 
-RUN mkdir /opt/local \
-  && wget -q -O /usr/bin/phpbrew https://github.com/phpbrew/phpbrew/raw/master/phpbrew && chmod +x /usr/bin/phpbrew \
+RUN wget -q -O /usr/bin/phpbrew https://github.com/phpbrew/phpbrew/raw/master/phpbrew && chmod +x /usr/bin/phpbrew \
   && phpbrew init \
   && echo 'source /root/.phpbrew/bashrc' >> /root/.bashrc \
   && source /root/.phpbrew/bashrc \
@@ -81,8 +80,7 @@ RUN  phpbrew ext install yaml -- --with-yaml=/usr/lib/x86_64-linux-gnu \
 COPY php.ini $PHPBREW_ROOT/php/php-$PHP_VERSION/etc/php.ini
 
 # Install other php tools
-RUN mkdir -p /usr/bin \
-  && wget -q -O /usr/bin/phpunit https://phar.phpunit.de/phpunit.phar && chmod +x /usr/bin/phpunit \
+RUN wget -q -O /usr/bin/phpunit https://phar.phpunit.de/phpunit.phar && chmod +x /usr/bin/phpunit \
   && wget -q -O /usr/bin/composer https://getcomposer.org/composer.phar && chmod +x /usr/bin/composer \
   && wget -q -O /usr/bin/phpmd http://static.phpmd.org/php/latest/phpmd.phar && chmod +x /usr/bin/phpmd \
   && wget -q -O /usr/bin/pdepend http://static.pdepend.org/php/latest/pdepend.phar && chmod +x /usr/bin/pdepend \
