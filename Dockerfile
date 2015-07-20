@@ -9,14 +9,13 @@ ENV DEBIAN_FRONTEND noninteractive
 
 ENV PHP_VERSION 5.6.10
 
-ENV PHPBREW_ROOT /opt/local/phpbrew
+ENV PHPBREW_ROOT /opt/local
 
 ENV PHPBREW_HOME /root/.phpbrew
 
 ENV PHPBREW_PHP php-$PHP_VERSION
 
 ENV PHPBREW_SET_PROMPT 1
-
 
 # Remove default dash and replace it with bash
 RUN rm /bin/sh && ln -s /bin/bash /bin/sh
@@ -73,10 +72,23 @@ RUN mkdir -p /usr/bin \
   && wget -q -O /usr/bin/box https://github.com/box-project/box2/releases/download/2.5.2/box-2.5.2.phar && chmod +x /usr/bin/box \
   && wget -q -O /usr/bin/phpbrew https://github.com/phpbrew/phpbrew/raw/master/phpbrew && chmod +x /usr/bin/phpbrew
 
+RUN mkdir /opt/local
 
+# Add user cidroid for testing
+RUN adduser --disabled-password --gecos '' cidroid \
+  && echo '%sudo ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers \
+  && usermod -aG sudo cidroid
+
+USER cidroid
+
+ENV HOME /home/cidroid
+
+ENV PHPBREW_HOME $HOME/.phpbrew
+
+RUN echo $PHPBREW_HOME
 RUN phpbrew init \
-  && echo 'source $HOME/.phpbrew/bashrc' >> /root/.bashrc \
-  && source ~/.phpbrew/bashrc \
+  && echo 'source $PHPBREW_HOME/bashrc' >> $HOME/.bashrc \
+  && source $PHPBREW_HOME/bashrc \
   && phpbrew install $PHP_VERSION \
               +default +bcmath +bz2 +calendar +cli +ctype +dom +fileinfo +filter +json \
               +mbregex +mbstring +mhash +pcntl +pcre +pdo +phar +posix +readline +sockets \
@@ -90,13 +102,11 @@ RUN  phpbrew ext install yaml -- --with-yaml=/usr/lib/x86_64-linux-gnu \
   && phpbrew ext install xdebug latest \
   && phpbrew ext install apcu latest
 
-# Add user cidroid for testing
-RUN adduser --disabled-password --gecos '' cidroid
-
 COPY php.ini $PHPBREW_ROOT/php/php-$PHP_VERSION/etc/php.ini
 
-VOLUME /home/ubuntu
-WORKDIR /home/ubuntu
+VOLUME $HOME/workspace
+WORKDIR $HOME/workspace
 
 COPY build.sh /home/ubuntu/build.sh
 ENTRYPOINT ["/home/ubuntu/build.sh"]
+
