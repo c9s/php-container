@@ -9,7 +9,7 @@ ENV DEBIAN_FRONTEND noninteractive
 
 ENV PHP_VERSION 5.6.10
 
-ENV PHPBREW_ROOT /root/.phpbrew
+ENV PHPBREW_ROOT /opt/local/phpbrew
 
 ENV PHPBREW_HOME /root/.phpbrew
 
