@@ -13,7 +13,7 @@ ENV PHPBREW_ROOT /root/.phpbrew
 
 ENV PHPBREW_HOME /root/.phpbrew
 
-ENV PHPBREW_PHP php-$PHP_VERSION.10
+ENV PHPBREW_PHP php-$PHP_VERSION
 
 ENV PHPBREW_SET_PROMPT 1
 
@@ -90,7 +90,8 @@ RUN  phpbrew ext install yaml -- --with-yaml=/usr/lib/x86_64-linux-gnu \
   && phpbrew ext install xdebug latest \
   && phpbrew ext install apcu latest
 
-RUN echo "Asia/Taipei" > /etc/timezone && dpkg-reconfigure -f noninteractive tzdata
+# Add user cidroid for testing
+RUN adduser --disabled-password --gecos '' cidroid
 
 COPY php.ini $PHPBREW_ROOT/php/php-$PHP_VERSION/etc/php.ini
 
