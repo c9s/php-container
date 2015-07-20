@@ -71,23 +71,10 @@ RUN mkdir -p /usr/bin \
   && wget -q -O /usr/bin/box https://github.com/box-project/box2/releases/download/2.5.2/box-2.5.2.phar && chmod +x /usr/bin/box \
   && wget -q -O /usr/bin/phpbrew https://github.com/phpbrew/phpbrew/raw/master/phpbrew && chmod +x /usr/bin/phpbrew
 
-RUN mkdir /opt/local
-
-# Add user cidroid for testing
-RUN adduser --disabled-password --gecos '' cidroid \
-  && echo '%sudo ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers \
-  && usermod -aG sudo cidroid
-
-USER cidroid
-
-ENV HOME /home/cidroid
-
-ENV PHPBREW_HOME $HOME/.phpbrew
-
-RUN echo $PHPBREW_HOME
-RUN phpbrew init \
-  && echo 'source $PHPBREW_HOME/bashrc' >> $HOME/.bashrc \
-  && source $PHPBREW_HOME/bashrc \
+RUN mkdir /opt/local \
+  && phpbrew init \
+  && echo 'source /root/.phpbrew/bashrc' >> /root/.bashrc \
+  && source /root/.phpbrew/bashrc \
   && phpbrew install $PHP_VERSION \
               +default +bcmath +bz2 +calendar +cli +ctype +dom +fileinfo +filter +json \
               +mbregex +mbstring +mhash +pcntl +pcre +pdo +phar +posix +readline +sockets \
@@ -103,9 +90,24 @@ RUN  phpbrew ext install yaml -- --with-yaml=/usr/lib/x86_64-linux-gnu \
 
 COPY php.ini $PHPBREW_ROOT/php/php-$PHP_VERSION/etc/php.ini
 
+RUN phpbrew self-update
+
+# Add user cidroid for testing
+RUN adduser --disabled-password --gecos '' cidroid \
+  && echo '%sudo ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers \
+  && usermod -aG sudo cidroid
+
+USER cidroid
+
+ENV HOME /home/cidroid
+
+ENV PHPBREW_HOME $HOME/.phpbrew
+
+RUN phpbrew init
+
 VOLUME $HOME/workspace
 WORKDIR $HOME/workspace
 
-COPY build.sh /home/ubuntu/build.sh
-ENTRYPOINT ["/home/ubuntu/build.sh"]
+COPY build.sh /home/cidroid/build.sh
+ENTRYPOINT ["/home/cidroid/build.sh"]
 
