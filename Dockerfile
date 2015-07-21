@@ -15,7 +15,7 @@ ENV PHPBREW_HOME /root/.phpbrew
 
 ENV PHPBREW_PHP php-$PHP_VERSION
 
-ENV PHPBREW_SET_PROMPT 1
+ENV PATH $PHPBREW_ROOT/php/$PHPBREW_PHP/bin:$PATH
 
 # Remove default dash and replace it with bash
 RUN rm /bin/sh && ln -s /bin/bash /bin/sh
@@ -24,9 +24,8 @@ RUN echo "Asia/Taipei" > /etc/timezone && dpkg-reconfigure -f noninteractive tzd
 
 RUN perl -i.bak -pe "s/archive.ubuntu.com/free.nchc.org.tw/g" /etc/apt/sources.list
 
-RUN export DEBIAN_FRONTEND="noninteractive" \
-  && apt-get update \
-  && apt-get build-dep -y php5 \
+RUN  apt-get -qq update \
+  && apt-get -qqy build-dep php5 \
   && apt-get -qqy install php5 \
   && apt-get -qqy install php5-dev \
   && apt-get -qqy install php5-cli \
@@ -74,7 +73,7 @@ RUN  phpbrew ext install yaml -- --with-yaml=/usr/lib/x86_64-linux-gnu \
   && phpbrew ext install github:c9s/cssmin \
   && phpbrew ext install github:sqmk/pecl-jsmin \
   && phpbrew ext install github:c9s/php-fileutil \
-  && phpbrew ext install xdebug latest \
+  && phpbrew ext install xdebug \
   && phpbrew ext install apcu latest
 
 RUN phpbrew --debug ext install iconv
