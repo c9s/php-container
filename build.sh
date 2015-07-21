@@ -1,12 +1,12 @@
 #!/bin/bash
 set -e
 
-export PHPBREW_SET_PROMPT=1
+echo "Sourcing phpbrew bashrc..."
 source $HOME/.phpbrew/bashrc
-phpbrew use $PHP_VERSION
+
+echo "Using ${PHP_VERSION}..."
+phpbrew use ${PHP_VERSION}
 
 php -v
-
-# ant
 
 exec "$@"
