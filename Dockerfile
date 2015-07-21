@@ -24,9 +24,8 @@ RUN echo "Asia/Taipei" > /etc/timezone && dpkg-reconfigure -f noninteractive tzd
 
 RUN perl -i.bak -pe "s/archive.ubuntu.com/free.nchc.org.tw/g" /etc/apt/sources.list
 
-RUN export DEBIAN_FRONTEND="noninteractive" \
-  && apt-get update \
-  && apt-get build-dep -y php5 \
+RUN  apt-get -qq update \
+  && apt-get -qqy build-dep php5 \
   && apt-get -qqy install php5 \
   && apt-get -qqy install php5-dev \
   && apt-get -qqy install php5-cli \
