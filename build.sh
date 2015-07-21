@@ -1,5 +1,5 @@
 #!/bin/bash
-set -e
+# set -e
 
 echo "Sourcing phpbrew bashrc..."
 source $HOME/.phpbrew/bashrc
