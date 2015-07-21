@@ -15,7 +15,7 @@ ENV PHPBREW_HOME /root/.phpbrew
 
 ENV PHPBREW_PHP php-$PHP_VERSION
 
-ENV PHPBREW_SET_PROMPT 1
+ENV PATH $PHPBREW_ROOT/php/$PHPBREW_PHP/bin:$PATH
 
 # Remove default dash and replace it with bash
 RUN rm /bin/sh && ln -s /bin/bash /bin/sh
