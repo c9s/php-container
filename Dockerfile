@@ -37,7 +37,6 @@ RUN export DEBIAN_FRONTEND="noninteractive" \
   && apt-get -qqy install php5-gd \
   && apt-get -qqy install php5-mysql \
   && apt-get -qqy install php5-xdebug \
-  && apt-get -qqy install php5-iconv \
   && apt-get -qqy install autoconf automake curl build-essential libxslt1-dev re2c libxml2 libxml2-dev php5-cli bison libbz2-dev libreadline-dev \
   && apt-get -qqy install libfreetype6 libfreetype6-dev libpng12-0 libpng12-dev libjpeg-dev libjpeg8-dev libjpeg8 libgd-dev libgd3 libxpm4 libltdl7 libltdl-dev \
   && apt-get -qqy install libssl-dev openssl \
