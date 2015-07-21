@@ -74,7 +74,7 @@ RUN  phpbrew ext install yaml -- --with-yaml=/usr/lib/x86_64-linux-gnu \
   && phpbrew ext install github:c9s/cssmin \
   && phpbrew ext install github:sqmk/pecl-jsmin \
   && phpbrew ext install github:c9s/php-fileutil \
-  && phpbrew ext install xdebug latest \
+  && phpbrew ext install xdebug \
   && phpbrew ext install apcu latest
 
 RUN phpbrew --debug ext install iconv
