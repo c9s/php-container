@@ -37,6 +37,7 @@ RUN export DEBIAN_FRONTEND="noninteractive" \
   && apt-get -qqy install php5-gd \
   && apt-get -qqy install php5-mysql \
   && apt-get -qqy install php5-xdebug \
+  && apt-get -qqy install php5-iconv \
   && apt-get -qqy install autoconf automake curl build-essential libxslt1-dev re2c libxml2 libxml2-dev php5-cli bison libbz2-dev libreadline-dev \
   && apt-get -qqy install libfreetype6 libfreetype6-dev libpng12-0 libpng12-dev libjpeg-dev libjpeg8-dev libjpeg8 libgd-dev libgd3 libxpm4 libltdl7 libltdl-dev \
   && apt-get -qqy install libssl-dev openssl \
@@ -76,6 +77,8 @@ RUN  phpbrew ext install yaml -- --with-yaml=/usr/lib/x86_64-linux-gnu \
   && phpbrew ext install github:c9s/php-fileutil \
   && phpbrew ext install xdebug latest \
   && phpbrew ext install apcu latest
+
+RUN phpbrew --debug ext install iconv
 
 COPY php.ini $PHPBREW_ROOT/php/php-$PHP_VERSION/etc/php.ini
 
