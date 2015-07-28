@@ -44,6 +44,7 @@ RUN  apt-get -qq update \
   && apt-get -qqy install libmhash-dev libmhash2 \
   && apt-get -qqy install libmcrypt-dev libmcrypt4 \
   && apt-get -qqy install mysql-server mysql-client libmysqlclient-dev libmysqld-dev \
+  && apt-get -qqy install nginx \
   && apt-get -qqy install ca-certificates \
   && apt-get -qqy install libyaml-dev \
   && apt-get -qqy install libcurl4-gnutls-dev libexpat1-dev libz-dev \
