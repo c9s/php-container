@@ -5,6 +5,7 @@ MAINTAINER Yo-An Lin "yoanlin93@gmail.com"
 
 USER root
 
+
 ENV DEBIAN_FRONTEND noninteractive
 
 ENV PHP_VERSION 5.6.10
@@ -96,22 +97,21 @@ RUN wget -q -O /usr/bin/phpunit https://phar.phpunit.de/phpunit.phar && chmod +x
   && wget -q -O /usr/bin/phptok https://phar.phpunit.de/phptok.phar && chmod +x /usr/bin/phptok \
   && wget -q -O /usr/bin/box https://github.com/box-project/box2/releases/download/2.5.2/box-2.5.2.phar && chmod +x /usr/bin/box
 
-# Add user cidroid for testing
-RUN adduser --disabled-password --gecos '' cidroid \
+ENV USER_ID web
+
+RUN adduser --disabled-password --gecos '' $USER_ID \
   && echo '%sudo ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers \
-  && usermod -aG sudo cidroid
+  && usermod -aG sudo $USER_ID
 
-USER cidroid
+USER $USER_ID
 
-ENV HOME /home/cidroid
-
+ENV HOME /home/$USER_ID
 ENV PHPBREW_HOME $HOME/.phpbrew
 
 RUN phpbrew init
 
-VOLUME $HOME/workspace
-WORKDIR $HOME/workspace
+VOLUME $HOME/app
+WORKDIR $HOME/app
 
-COPY build.sh /home/cidroid/build.sh
-ENTRYPOINT ["/home/cidroid/build.sh"]
-
+COPY entry.sh /home/web/entry.sh
+ENTRYPOINT ["/home/web/entry.sh"]
