@@ -1,4 +1,4 @@
-FROM  ubuntu:14.04
+FROM  ubuntu:15.04
 # FROM  debian:jessie
 
 MAINTAINER Yo-An Lin "yoanlin93@gmail.com"
