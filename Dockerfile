@@ -1,5 +1,5 @@
-# FROM  ubuntu:15.04
-FROM  debian:jessie
+FROM  ubuntu:15.04
+# FROM  debian:jessie
 
 MAINTAINER Yo-An Lin "yoanlin93@gmail.com"
 
@@ -112,5 +112,6 @@ RUN phpbrew init
 VOLUME $HOME/workspace
 WORKDIR $HOME/workspace
 
-COPY build.sh /home/app/build.sh
-ENTRYPOINT ["/home/app/build.sh"]
+COPY build.sh /home/cidroid/build.sh
+ENTRYPOINT ["/home/cidroid/build.sh"]
+
